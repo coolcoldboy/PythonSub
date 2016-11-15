@@ -241,10 +241,85 @@ def mgettravellingbag():
     str = urllib.request.urlopen('http://localhost:8080/travel/travellingbag/gettravellingbag?userID=10063').read().decode('utf-8')
     print(str)
 
+def mcreatePlanSchedular():
+    str = urllib.request.urlopen('http://localhost:8080/travel/travellingbag/createPlanSchedular?userID=10063').read().decode('utf-8')
+    print(str)
+
+def msentPrivatePlanToPlanner():
+    str = urllib.request.urlopen('http://localhost:8080/travel/travellingbag/sentPrivatePlanToPlanner?userID=10063&planID=100370&guidID=10066').read().decode('utf-8')
+    print(str)
+
+def getPlanDetail():
+    str = urllib.request.urlopen('http://localhost:8080/travel/guideplan/getPlanDetail?userID=10066&planID=100376').read().decode('utf-8')
+    print(str)
+
+def getServicesCollectByType():
+    str = urllib.request.urlopen('http://10.101.1.165:8888/travel/travellingbag/getServicesCollectByType?userID=10063&serviceTypeID=1&page=1').read().decode('utf-8')
+    print(str)
+
+def setFeedBack():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/setFeedBack?userID=10063&content=我的天空\n\nshenmedongxi\n测试中&trueName=汪先生','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def getSpotsCollectCount():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/travellingbag/getSpotsCollectCount?userID=10063','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def addOrderComplaint():
+    form = {'orderID': '2548563',
+            'userID': '10063',
+            'iMUserID': '2500003',
+            'applyRefund': '102',
+            'actualRefund': '1256',
+            'status': '1',
+            'reason': '什么东西加油',
+            'bankName': '建设银行',
+            'accountNum': '6321585478521545',
+            'iDNum': '34082819850122',
+    }
+
+    tupian = {'file': ['C:\\Users\\Public\\Pictures\\Sample Pictures\\Tulips.jpg',
+                       'C:\\Users\\Public\\Pictures\\Sample Pictures\\Tulips.jpg']
+              }
+
+    form = dict(form, **tupian)
+    str = PostGetHttp.posthttp(form, 'http://localhost:8080/travel/order/addOrderComplaint')
+
+    print(str)
+
+def getOrderComplaint():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/getOrderComplaint?complaintID=1','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def getOrderComplaint():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/getOrderComplaintID?orderID=596','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def getPlannerImfForMainPage():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/getPlannerImfForMainPage?userID=10063&guiderID=10067','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def getvisitororderdetail():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/visitororderdetail?orderId=565','?&:/=')).read().decode('utf-8')
+    print(str)
+
+
 if __name__ == '__main__':
+    # sentPrivatePlanToPlanner
+    # mcreatePlanSchedular()
+    # msentPrivatePlanToPlanner()
 
-    mgettravellingbag()
+    # getPlanDetail()
+    # getServicesCollectByType()
+    # setFeedBack()
 
+    # addOrderComplaint()
+
+    # getOrderComplaint()
+
+    # getPlannerImfForMainPage()
+
+    getvisitororderdetail()
     exit()
     # PostGetHttp.gethttp('localhost','8080','/travel/order/orderDetailForBKM?'
     # +'orderID=324&orderType=2')

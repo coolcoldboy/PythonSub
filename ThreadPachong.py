@@ -46,7 +46,7 @@ def country_id_get():
     # 肯尼亚
 
     countrys = {'德国', '法国', '英国', '瑞典', '瑞士', '意大利', '丹麦', '挪威', '芬兰', '荷兰', '西班牙', '爱尔兰',
-                '澳大利亚', '新西兰', '新加坡', '泰国', '马来西亚', '印度尼西亚', '加拿大', '美国', '日本', '韩国', '肯尼亚'}
+                '澳大利亚', '新西兰', '新加坡', '泰国', '马来西亚', '印尼', '加拿大', '美国', '日本', '韩国', '肯尼亚'}
 
     # 未导入完成
     countrys = []
@@ -255,7 +255,7 @@ def hoteltable_crow(hoteltable):
         else:
             postcode_city = address_list.pop().strip()
             postcode = postcode_city.split(' ')[0]
-            city = postcode_city.split(' ')[len(postcode_city.split(' ')) - 1]
+            city = postcode_city.split(postcode)[1].strip()
 
         #
         address_details_html = hotelHtmlSoup.find_all(property="itemListElement")

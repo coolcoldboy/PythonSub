@@ -5,10 +5,12 @@ import os, sys
 import pymysql
 from fdfs_client.client import *
 import threading
+import PostGetHttp
 
 print(sys.getdefaultencoding())
 import http.client, urllib, urllib.request
 from http.cookiejar import CookieJar
+import json
 
 os.chdir(os.path.dirname(sys.argv[0]))
 
@@ -115,7 +117,8 @@ def get_hotel_to_spot_sql(country):
           " NULL, " \
           " NULL, " \
           " NULL, " \
-          "  CONCAT('booking',hotelid)  " \
+          "  hotel.City,  " \
+          "  hotel.hotelid " \
           "FROM " \
           " traveldb.tab_hotel hotel LEFT JOIN tab_travelregion country on ( " \
           "hotel.Country = " \
@@ -155,26 +158,30 @@ def get_insert_hotel_sql(country):
 
 
 def import_city_to_47(country):
+    print("城市导入47 start")
     conn47, cur47 = get_conn_cur_47()
     conn163, cur163 = get_conn_cur_163()
 
     cur163.execute('SELECT DISTINCT City from traveldb.tab_hotel where Country = \'' + country + '\' order by city')
     citys = cur163.fetchall()
     if (0 == len(citys)):
+        print("内网 NO city")
         return 0
 
     cur47.execute('SELECT RegionID from traveldb.tab_travelregion where RegionCnName = \'' + country + '\'')
-    country = cur47.fetchall()
-    if (0 == len(country)):
+    countrytuple = cur47.fetchall()
+    if (0 == len(countrytuple)):
         print("外网 NO Country")
         return 0
-
+    if (1 < len(countrytuple)):
+        print("外网 多个 Country")
+        return 0
     # 24760
     insert_city_sql = get_insert_city_sql()
 
     for city in citys:
-        cur47.execute(insert_city_sql, (city[0], country, country,
-                                        city[0]))
+        cur47.execute(insert_city_sql, (city[0].strip(), country, country,
+                                        city[0].strip()))
         pass
     conn47.commit()
     cur47.close()
@@ -182,20 +189,20 @@ def import_city_to_47(country):
 
     conn163.close()
     cur163.close()
-
+    print("城市导入47 end")
     return len(citys)
 
 
 def uploade_pic(url):
-    if True:
-        return 1
+    # if True:
+    # return 1
 
     main_url = 'http://10.101.1.165:8097/'
     pic_url = main_url + url
 
     oppener = get_oppener()
 
-    client_file = 'fdfs_client_waiwang.conf'
+    client_file = 'fdfs_client_outnet.conf'
     client = Fdfs_client(client_file)
 
     try:
@@ -205,10 +212,15 @@ def uploade_pic(url):
 
         if None == file_array:
             return 'error'
-        ret_upload = client.upload_by_buffer(file_array, pic_name.split('.')[1], {"fileName": pic_name})
-        # print (ret_upload)
+        tupian = {'file': file_array}
 
-        file_id = ret_upload['Remote file_id'].replace('\\', '/')  # 新版本文件存放Remote file_id格式变化
+        retstr = PostGetHttp.posthttp_onefile(tupian, 'http://123.59.144.44/travel/travellingbag/addtupian')
+        jsonobj = json.loads(retstr)
+        file_id = jsonobj['datas']
+        # ret_upload = client.upload_by_buffer(file_array, pic_name.split('.')[1], {"fileName": pic_name})
+        # # print (ret_upload)
+        #
+        # file_id = ret_upload['Remote file_id'].replace('\\', '/')  # 新版本文件存放Remote file_id格式变化
 
         return file_id
     except Exception as err:
@@ -222,10 +234,13 @@ def uploade_pic(url):
 
 
 def import_hotel_pic_to_47(cur163, cur47, hotel_id, last_spots_id):
-    cur163.execute('select Url,CONCAT( \'' + 'booking' + '\',HotelPicID) from traveldb.tab_hotel_pic where HotelID = \'' + str(hotel_id) + '\' order by HotelPicID ')
+    print("导入ID=%d的酒店图片到47 start"%(hotel_id))
+    cur163.execute(
+        'select Url,CONCAT( \'' + 'booking' + '\',HotelPicID) from traveldb.tab_hotel_pic where HotelID = \'' + str(
+            hotel_id) + '\' order by HotelPicID ')
     pics = cur163.fetchall()
 
-    if len(pics)==0:
+    if len(pics) == 0:
         return 0
 
     insert_hotel_pic_sql = "INSERT INTO `traveldb`.`tab_travelspotsdetail` (`SpotsID`, `PicURL`, `Summary`, `CreateDate`, `UpdateDate`)  " \
@@ -234,17 +249,18 @@ def import_hotel_pic_to_47(cur163, cur47, hotel_id, last_spots_id):
 
     for pic in pics:
         out_net_fileid = uploade_pic(pic[0])
-        cur47.execute(insert_hotel_pic_sql,(last_spots_id,out_net_fileid,pic[1]))
+        cur47.execute(insert_hotel_pic_sql, (last_spots_id, out_net_fileid, pic[1]))
 
         pass
-    print("hotel_id:"+str(hotel_id))
-    print("last_spots_id:"+str(last_spots_id))
-    print("pics counts:"+str(len(pics)))
+    print("last_spots_id:" + str(last_spots_id))
+    print("pics counts:" + str(len(pics)))
+    print("导入ID=%d的酒店图片到47 end"%(hotel_id))
     return len(pics)
     pass
 
 
 def import_hotel_to_47(country):
+    print("导入酒店")
     conn47, cur47 = get_conn_cur_47()
     conn163, cur163 = get_conn_cur_163()
 
@@ -256,14 +272,14 @@ def import_hotel_to_47(country):
     hotels = cur163.fetchall()
     try:
         for hotel in hotels:
-            # 内网的文件上传到外网并得到ID
+            # 内网的文件上传到外网并得到ID：封面
             out_net_fileid = uploade_pic(hotel[12])
-            hotel = list(hotel)
-            # 将外网的HotelID保存到外网的数据库中
+            hotel = list(hotel)  # 将外网的HotelID保存到外网的数据库中
             hotel[12] = out_net_fileid
-            hotel = tuple(hotel)
-            # hotelID抽取
-            hotel_id = hotel[23][7:]
+
+            # hotelID抽取,最后一个项目删除
+            hotel_id = hotel.pop()
+
             # 导入外网数据库
             count = cur47.execute(insert_hotel_sql, hotel)
             # 最后一个插入的spotsid抽取
@@ -273,6 +289,7 @@ def import_hotel_to_47(country):
             # 图片导入到外网
             count = import_hotel_pic_to_47(cur163, cur47, hotel_id, last_spots_id)
         conn47.commit()
+
     except Exception as error:
         print("error:")
         print(error.__traceback__)
@@ -284,15 +301,46 @@ def import_hotel_to_47(country):
         conn47.close()
         conn163.close()
         pass
+pass
 
-    pass
+
+def update_hotel_city_to_47():
+    print("更新城市ID")
+    conn47, cur47 = get_conn_cur_47()
+    try:
+        count = cur47.execute("update traveldb.tab_travelspots spots SET CityID =  " \
+                              "(SELECT region.RegionID from traveldb.tab_travelregion region WHERE spots.`comment` = region.RegionCnName " \
+                              "AND spots.CountryID = region.ParentID LIMIT 0,1) " \
+                              "WHERE spots.CityID is null and spots.SpotsTypeID=3 " )
+    except Exception as err:
+        conn47.rollback()
+        pass
+    finally:
+        print("error:")
+        conn47.commit()
+        cur47.close()
+        conn47.close()
+        pass
+
+    print('更新了数据：')
+    print(count)
+
+
+    return count
 
 
 if __name__ == '__main__':
-    country = '澳大利亚'
-    # city_count = import_city_to_47(country)
-    # print("citys sum: " + str(city_count))
+    # 美国、加拿大、澳大利亚、新西兰、法国、德国、意大利、西班牙、捷克、奥地利、芬兰、瑞典、挪威、英国、荷兰、卢森堡、泰国、日本、韩国、肯尼亚
+    # 瑞士、比利时、摩纳哥、葡萄牙、希腊、匈牙利、冰岛、波兰、爱尔兰
+    country = '美国'
+    country = '加拿大'
+    city_count = import_city_to_47(country)
+    print("citys sum: " + str(city_count))
+    if city_count == 0:
+        exit(1)
+
     import_hotel_to_47(country)
+    update_hotel_city_to_47()
 
     pass
 

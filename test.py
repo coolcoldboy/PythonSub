@@ -1,6 +1,6 @@
 __author__ = 'zhwang.kevin'
 
-# coding=GBK
+# coding=utf-8
 import os, sys
 import pymysql
 import time
@@ -14,6 +14,23 @@ from bs4 import BeautifulSoup
 import http.client, urllib, urllib.request
 import threading
 
+
+def get_conn_cur_163():
+    conn = pymysql.connect(host='10.101.1.163', port=3306, user='traveldb', passwd='traveldb', db='traveldb',
+                           charset='UTF8')
+    cur = conn.cursor()
+    conn.autocommit(0)
+    return conn, cur
+
+
+def get_conn_cur_47():
+    conn = pymysql.connect(host='123.59.144.47', port=3306, user='traveldb', passwd='traveldb', db='traveldb',
+                           charset='UTF8')
+    cur = conn.cursor()
+    conn.autocommit(0)
+    return conn, cur
+
+
 def ab2c():
     conn = pymysql.connect(host='10.101.1.163', port=3306, user='traveldb', passwd='traveldb', db='traveldb',
                            charset='UTF8')
@@ -21,10 +38,11 @@ def ab2c():
     abc = 'jiayou'.replace('a', 'z')
 
     cur = conn.cursor()
-    cur.execute("SELECT b.HotelCoverPic from tab_2_hotel b where b.Country='日本'")
+    cur.execute("SELECT b.HotelCoverPic from tab_hotel_bak b where b.Country='日本'")
 
     data = cur.fetchall()
-    cur.execute("select a.Url from tab_hotel_2_pic a where a.HotelID in (SELECT b.HotelID from tab_2_hotel b where b.Country='日本')")
+    cur.execute(
+        "select a.Url from tab_hotel_pic_bak a where a.HotelID in (SELECT b.HotelID from tab_hotel_bak b where b.Country='日本')")
     data = data + cur.fetchall()
 
     client_file = 'fdfs_client.conf'
@@ -40,6 +58,7 @@ def ab2c():
     cur.close()
     conn.close()
     print('sql wancheng')
+
 
 def abc():
     conn = pymysql.connect(host='10.101.1.163', port=3306, user='traveldb', passwd='traveldb', db='traveldb',
@@ -48,10 +67,10 @@ def abc():
     abc = 'jiayou'.replace('a', 'z')
 
     cur = conn.cursor()
-    cur.execute("SELECT b.HotelCoverPic from tab_hotel b")
+    cur.execute("SELECT b.HotelCoverPic from tab_hotel_bak b")
 
     data = cur.fetchall()
-    cur.execute("select a.Url from tab_hotel_pic a")
+    cur.execute("select a.Url from tab_hotel_pic_bak a")
     data = data + cur.fetchall()
 
     client_file = 'fdfs_client.conf'
@@ -67,6 +86,7 @@ def abc():
     cur.close()
     conn.close()
     print('sql wancheng')
+
 
 def cde(hoteltable):
     time.sleep(5)
@@ -84,17 +104,59 @@ def shoudongshan():
     }
 
     for url in pics:
-        ret_delete=client.delete_file(url)
+        ret_delete = client.delete_file(url)
 
     print('shoudong wancheng')
 
 
-if __name__ == '__main__':
+def update_hotel_city_to_47():
+    conn47, cur47 = get_conn_cur_47()
+    conn163, cur163 = get_conn_cur_163()
+    cur47.execute(
+        "SELECT  SUBSTR(`comment`,8),SpotsID from traveldb.tab_travelspots  where cityid is NULL and SpotsTypeID=3 and `comment` like '%book%' ")
+    hotelids = cur47.fetchall()
 
-    ab2c()
+    for hotelid in hotelids:
+        cur163.execute('SELECT  City from traveldb.tab_hotel where HotelID = \'' + hotelid[0] + '\' ')
+        city = cur163.fetchone()
+        city = city[0]
+        updatesql = "UPDATE traveldb.tab_travelspots spot " \
+                    "SET CityID =  " \
+                    " ( " \
+                    "  SELECT " \
+                    "   r.RegionID " \
+                    "  FROM " \
+                    "   tab_travelregion r " \
+                    "  WHERE " \
+                    "   r.RegionCnName = %s " \
+                    "  LIMIT 0, " \
+                    "  1 " \
+                    " ) " \
+                    " WHERE " \
+                    "  spot.SpotsID = %s "
+        cur47.execute(updatesql,(city,hotelid[1]))
+        conn47.commit()
+
+    cur47.close()
+    conn47.close()
+    cur163.close()
+    conn163.close()
+
+    pass
+
+
+if __name__ == '__main__':
+    # update_hotel_city_to_47()
+    print('woshi %d，%s'%(1,'洪'))
+    hotel_id = 123234
+    print("导入ID=%d的酒店图片到47 start"%(hotel_id))
+
+    pass
+    'shoudong wancheng'.split('shoudong')
+    # ab2c()
 
     # for hotel_star_class in ['b-sprite', 'stars', 'ratings_stars_4_half', 'star_track']:
-    #     if 'ratings_stars' in hotel_star_class \
+    # if 'ratings_stars' in hotel_star_class \
     #             or 'ratings_circles'  in hotel_star_class :
     #         hotel_star=int(hotel_star_class.split('_')[2])
     #         if len(hotel_star_class.split('_')) > 3:
