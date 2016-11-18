@@ -303,6 +303,53 @@ def getvisitororderdetail():
     str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/visitororderdetail?orderId=565','?&:/=')).read().decode('utf-8')
     print(str)
 
+def getPostCode():
+    from openpyxl import Workbook
+    from openpyxl import load_workbook
+    wb = load_workbook('D:\\workspace\\酒店booking\\tab_hotel_已更正_ - 副本.xlsx')
+    ws = wb.active
+    clumo = 2
+    while True:
+        # D列:Address
+        clumoD = 'D'+str(clumo)
+        # F列:Country
+        clumoF = 'F'+str(clumo)
+        # G列：City
+        clumoG = 'G'+str(clumo)
+        # H列：temppostcode
+        clumoH = 'H'+str(clumo)
+        # I列：postcode
+        clumoI = 'I'+str(clumo)
+
+        # C列:HotelNameCH
+        clumoC = 'C'+str(clumo)
+        # B列:HotelName
+        clumoB = 'B'+str(clumo)
+
+        if ws[clumoF].value == None:
+            break
+
+        if ws[clumoC].value == None:
+            ws[clumoC] = ws[clumoB].value
+            pass
+
+        other = ('日本','美国')
+        if ws[clumoF].value not in other:
+            list = ws[clumoD].value.split(', ')
+            postCode = list[len(list)-2]
+            city = ws[clumoG].value
+            # print('%s:%s'%(ws[clumoD].value,postCode.split(city)[0].strip()))
+            ws[clumoH] = postCode.split(city)[0].strip()
+            pass
+        else:
+            ws[clumoH] = ws[clumoI].value
+
+        clumo = clumo+1
+        pass
+    wb.save('D:\\workspace\\酒店booking\\tab_hotel_已更正_ 2.xlsx')
+
+    pass
+
 
 if __name__ == '__main__':
     # sentPrivatePlanToPlanner
@@ -319,7 +366,10 @@ if __name__ == '__main__':
 
     # getPlannerImfForMainPage()
 
-    getvisitororderdetail()
+    # getvisitororderdetail()
+
+    getPostCode()
+
     exit()
     # PostGetHttp.gethttp('localhost','8080','/travel/order/orderDetailForBKM?'
     # +'orderID=324&orderType=2')

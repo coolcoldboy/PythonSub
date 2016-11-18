@@ -383,6 +383,13 @@ if __name__ == '__main__':
 
     opener = get_oppener()
 
+    hotelclick = 'http://www.booking.com/hotel/fr/hoh-inor.zh-cn.html?aid=304142;label=gen173nr-1DCAQoggJCCmNvdW50cnlfMzhIK2IFbm9yZWZoMYgBAZgBMsIBA2FibsgBDNgBA-gBAfgBA6gCBA;sid=b3ec9d4281ab3b1075e2df549a93ff52;dest_id=73;dest_type=country;dist=0;group_adults=2;room1=A%2CA;sb_price_type=total;srfid=0669a5223bb53b0ef5e4a13391c907b7d6c99c1dX1;type=total;ucfs=1&'
+    hotelHtml = opener.open(hotelclick).read().decode('utf-8')
+
+    print(hotelHtml)
+
+    exit()
+
     # 国家ID取得
     country_id_list,country_name_list,country_type_list = country_id_get()
 

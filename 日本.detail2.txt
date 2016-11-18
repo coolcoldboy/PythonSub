@@ -1,0 +1,1 @@
+page:1:http://www.booking.com/searchresults.zh-cn.html?dest_id=106&dest_type=country&order=class

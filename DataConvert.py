@@ -4,7 +4,6 @@ __author__ = 'zhwang.kevin'
 import os, sys
 import pymysql
 from fdfs_client.client import *
-import threading
 import PostGetHttp
 
 print(sys.getdefaultencoding())

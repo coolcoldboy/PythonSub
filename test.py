@@ -151,6 +151,11 @@ if __name__ == '__main__':
     hotel_id = 123234
     print("导入ID=%d的酒店图片到47 start"%(hotel_id))
 
+
+    list = 'Rådhusesplanaden 14, 903 28 于默奥, 瑞典'.split(', ')
+    postCode = list[len(list)-2]
+    print(postCode.split('于默奥')[0].strip())
+
     pass
     'shoudong wancheng'.split('shoudong')
     # ab2c()
