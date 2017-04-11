@@ -143,7 +143,6 @@ if __name__ == '__main__':
                     cityID = city['cityid']
                     if(None == cityID):
                         continue
-
                     cityName = city['cityname']
                     cityEnName = city['cityname_en']
                     cityPicUrl = city['pic']
