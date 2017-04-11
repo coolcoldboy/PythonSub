@@ -38,6 +38,7 @@ def mtest():
               'coverFile': 'C:\\Users\\Public\\Pictures\\Sample Pictures\\Tulips.jpg'}
     dictMerged2 = dict(form, **tupian)
     str = PostGetHttp.posthttp(dictMerged2, 'http://localhost:8080/travel/user/test')
+    print(str)
     return json.loads(str)
 
 
@@ -250,7 +251,7 @@ def msentPrivatePlanToPlanner():
     print(str)
 
 def getPlanDetail():
-    str = urllib.request.urlopen('http://localhost:8080/travel/guideplan/getPlanDetail?userID=10066&planID=100376').read().decode('utf-8')
+    str = urllib.request.urlopen('http://10.101.1.165:8888/travel/guideplan/getPlanDetail?userID=10066&planID=100376').read().decode('utf-8')
     print(str)
 
 def getServicesCollectByType():
@@ -351,12 +352,85 @@ def getPostCode():
     pass
 
 
+def setAgentStatus():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/setAgentStatus?guideID=10079&agentGuideID=10066&status=2','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def getPrincipalGuideList():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/getPrincipalGuideList?guideID=10066&page=1','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def getPrincipalGuideList():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/getPrincipalGuideList?guideID=10066&page=1','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def getPrivatePlanDetail():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/travellingbag/getPrivatePlanDetail?planStatus=3&userID=10063&planID=100623','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def orderlistForBKM():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/orderlistForBKM?orderNo=201611','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def getCashDetail():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/getCashDetail?cashID=49','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def getCashList():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/getCashList?cashID=6','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def orderDetailForBKM():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/orderDetailForBKM?orderID=719&orderType=1','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def orderlistForBKM():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/orderlistForBKM?orderType=1&orderNo=201611251537','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def getOrderComplaintList():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/getOrderComplaintList','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def getDengniBankAccounts():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/getDengniBankAccounts','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def getFeedBackList():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/getFeedBackList','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def getFeedBackDetail():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/getFeedBackDetail?feedbackID=1','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def saveDeviceTokenToServer():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/auth/saveDeviceTokenToServer?userID=10063&deviceToken=a72bf8b8dc87d8107db961061ba2fcc00735419ae66c3e841d33599f5734ab00','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def guideorderdetail():
+    str = urllib.request.urlopen(urllib.parse.quote('http://10.101.1.165:8888/travel/order/guideorderdetail?orderId=743','?&:/=')).read().decode('utf-8')
+    print(str)
+
+
+
+def getAgent():
+    str = urllib.request.urlopen(urllib.parse.quote('http://10.101.1.165:8888/travel/user/getAgent?guideID=10023','?&:/=')).read().decode('utf-8')
+    print(str)
+
+def changeOrderPrice():
+    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/changeOrderPrice?orderID=810&price=1','?&:/=')).read().decode('utf-8')
+    print(str)
+
 if __name__ == '__main__':
     # sentPrivatePlanToPlanner
     # mcreatePlanSchedular()
     # msentPrivatePlanToPlanner()
 
+    addOrderComplaint();
     # getPlanDetail()
+    # getAgent()
+
     # getServicesCollectByType()
     # setFeedBack()
 
@@ -368,8 +442,36 @@ if __name__ == '__main__':
 
     # getvisitororderdetail()
 
-    getPostCode()
+    # getPostCode()
 
+    # setAgentStatus()
+
+    # getPrincipalGuideList()
+
+    # getPrivatePlanDetail()
+
+    # orderlistForBKM()
+    # getCashDetail()
+    # getCashList()
+
+    # orderDetailForBKM()
+    # orderlistForBKM()
+
+    # getOrderComplaintList()
+
+    # getFeedBackList()
+    # guideorderdetail()
+
+    # getFeedBackDetail()
+
+    # applyCash()
+    # mupdateOrderTest()
+    # getDengniBankAccounts()
+    # mgettest()
+
+    # saveDeviceTokenToServer()
+    # changeOrderPrice()
+    # jsonobj = mtest()
     exit()
     # PostGetHttp.gethttp('localhost','8080','/travel/order/orderDetailForBKM?'
     # +'orderID=324&orderType=2')
@@ -379,7 +481,7 @@ if __name__ == '__main__':
 
 
     # jsonobj= mguideorderlist()
-    # jsonobj = mtest()
+
     # jsonobj = mgetbooking()
     # print(jsonobj)
 

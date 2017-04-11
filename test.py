@@ -1,6 +1,7 @@
+import re
+# coding=utf-8
 __author__ = 'zhwang.kevin'
 
-# coding=utf-8
 import os, sys
 import pymysql
 import time
@@ -155,6 +156,10 @@ if __name__ == '__main__':
     list = 'Rådhusesplanaden 14, 903 28 于默奥, 瑞典'.split(', ')
     postCode = list[len(list)-2]
     print(postCode.split('于默奥')[0].strip())
+
+    match = re.search(r'（.*（.*））', 'Clayton Whites Hotel (formerly Whites of Wexford)（克莱顿怀特酒店（前韦克斯福德怀特酒店））')
+
+    print(match.group(0))
 
     pass
     'shoudong wancheng'.split('shoudong')

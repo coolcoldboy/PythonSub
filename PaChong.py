@@ -93,7 +93,7 @@ def pics_url_open(hotel_picscr,change=False):
                 return fileOpen, hotel_picscr
             except  Exception as err:
                 print(err)
-                None, hotel_picscr
+                return None, hotel_picscr
         finally:
             pass
     finally:

@@ -10,6 +10,8 @@ print(sys.getdefaultencoding())
 import http.client, urllib, urllib.request
 from http.cookiejar import CookieJar
 import json
+import traceback
+import datetime
 
 os.chdir(os.path.dirname(sys.argv[0]))
 
@@ -95,7 +97,7 @@ def get_hotel_to_spot_sql(country):
     abc = "SELECT " \
           " '10067', " \
           " country.RegionID, " \
-          " city.RegionID, " \
+          " NULL, " \
           " '3', " \
           " SUBSTR(hotel.Abstract,1,40), " \
           " NOW(), " \
@@ -125,9 +127,8 @@ def get_hotel_to_spot_sql(country):
                            "AND " \
                            "country.RegionCnName = hotel.Country " \
                            ") " \
-                           "LEFT JOIN tab_travelregion city on (city.RegionCnName = hotel.City) " \
                            "WHERE hotel.Country = " \
-                           "\'" + country + "\'"
+                           "\'" + country + "\' order by hotel.hotelid"
     return abc
 
 
@@ -204,31 +205,35 @@ def uploade_pic(url):
     client_file = 'fdfs_client_outnet.conf'
     client = Fdfs_client(client_file)
 
-    try:
-        file_array = oppener.open(pic_url).read()
-        oppener.close()
-        pic_name = pic_url.split('/').pop()
+    tempi = 1
+    while True:
+        try:
+            tempi = tempi+1
+            file_array = oppener.open(pic_url).read()
 
-        if None == file_array:
-            return 'error'
-        tupian = {'file': file_array}
+            pic_name = pic_url.split('/').pop()
 
-        retstr = PostGetHttp.posthttp_onefile(tupian, 'http://123.59.144.44/travel/travellingbag/addtupian')
-        jsonobj = json.loads(retstr)
-        file_id = jsonobj['datas']
-        # ret_upload = client.upload_by_buffer(file_array, pic_name.split('.')[1], {"fileName": pic_name})
-        # # print (ret_upload)
-        #
-        # file_id = ret_upload['Remote file_id'].replace('\\', '/')  # 新版本文件存放Remote file_id格式变化
+            tupian = {'file': file_array}
 
-        return file_id
-    except Exception as err:
-        print("error:")
-        print(err.__traceback__)
-        return "error"
-        pass
-    finally:
-        pass
+            retstr = PostGetHttp.posthttp_onefile(tupian, 'http://123.59.144.44/travel/travellingbag/addtupian')
+            jsonobj = json.loads(retstr)
+            file_id = jsonobj['datas']
+            # ret_upload = client.upload_by_buffer(file_array, pic_name.split('.')[1], {"fileName": pic_name})
+            # # print (ret_upload)
+            #
+            # file_id = ret_upload['Remote file_id'].replace('\\', '/')  # 新版本文件存放Remote file_id格式变化
+
+            return file_id
+        except Exception as err:
+            print("error:")
+            print(err.__traceback__)
+            traceback.print_exc()
+            if tempi == 4:
+                return "error"
+            continue
+        finally:
+            pass
+    oppener.close()
     pass
 
 
@@ -246,10 +251,17 @@ def import_hotel_pic_to_47(cur163, cur47, hotel_id, last_spots_id):
                            "VALUES  " \
                            "(%s, %s, %s, NOW(), NOW())"
 
+    piccount = 0
     for pic in pics:
-        out_net_fileid = uploade_pic(pic[0])
-        cur47.execute(insert_hotel_pic_sql, (last_spots_id, out_net_fileid, pic[1]))
 
+        out_net_fileid = uploade_pic(pic[0])
+        if 'error' != out_net_fileid:
+            cur47.execute(insert_hotel_pic_sql, (last_spots_id, out_net_fileid, pic[1]))
+            piccount = piccount + 1
+            if piccount == 25:
+                break
+        else:
+            continue
         pass
     print("last_spots_id:" + str(last_spots_id))
     print("pics counts:" + str(len(pics)))
@@ -303,19 +315,30 @@ def import_hotel_to_47(country):
 pass
 
 
-def update_hotel_city_to_47():
+def getUpdateCitySql(country):
+
+    updateCitySql = "update traveldb.tab_travelspots spots SET CityID =  " \
+    "(SELECT region.RegionID from traveldb.tab_travelregion region WHERE spots.`comment` = region.RegionCnName " \
+    "AND spots.CountryID = region.ParentID LIMIT 0,1) " \
+    "WHERE spots.CityID is null and spots.SpotsTypeID=3 " \
+    "and spots.CountryID = (SELECT country.RegionID from traveldb.tab_travelregion country where country.RegionCnName = " \
+    "\'" + country + "\' )"
+    return updateCitySql
+
+
+
+def update_hotel_city_to_47(country):
     print("更新城市ID")
     conn47, cur47 = get_conn_cur_47()
+    count =0
     try:
-        count = cur47.execute("update traveldb.tab_travelspots spots SET CityID =  " \
-                              "(SELECT region.RegionID from traveldb.tab_travelregion region WHERE spots.`comment` = region.RegionCnName " \
-                              "AND spots.CountryID = region.ParentID LIMIT 0,1) " \
-                              "WHERE spots.CityID is null and spots.SpotsTypeID=3 " )
+        count = cur47.execute(getUpdateCitySql(country))
     except Exception as err:
+        print("error:")
         conn47.rollback()
         pass
     finally:
-        print("error:")
+
         conn47.commit()
         cur47.close()
         conn47.close()
@@ -323,7 +346,6 @@ def update_hotel_city_to_47():
 
     print('更新了数据：')
     print(count)
-
 
     return count
 
@@ -333,13 +355,29 @@ if __name__ == '__main__':
     # 瑞士、比利时、摩纳哥、葡萄牙、希腊、匈牙利、冰岛、波兰、爱尔兰
     country = '美国'
     country = '加拿大'
-    city_count = import_city_to_47(country)
-    print("citys sum: " + str(city_count))
-    if city_count == 0:
-        exit(1)
+    country = '澳大利亚'
 
-    import_hotel_to_47(country)
-    update_hotel_city_to_47()
+    country = ('新西兰',)
+    country = ('法国',)
+    country = ('德国','意大利','西班牙',)
+
+    country = ('泰国','肯尼亚','瑞士','挪威','荷兰','英国','日本')
+
+    country = ('芬兰','瑞典','新加坡',)
+
+    country = ('韩国','丹麦','爱尔兰','马来西亚',)
+
+    country = ('印度尼西亚',)
+
+    for countryitme in country:
+        print("country: " + countryitme)
+        city_count = import_city_to_47(countryitme)
+        print("citys sum: " + str(city_count))
+        if city_count == 0:
+            continue
+
+        import_hotel_to_47(countryitme)
+        update_hotel_city_to_47(countryitme)
 
     pass
 
