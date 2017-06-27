@@ -422,12 +422,34 @@ def changeOrderPrice():
     str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/changeOrderPrice?orderID=810&price=1','?&:/=')).read().decode('utf-8')
     print(str)
 
+#json传值 post，添加更新件数的通知消息
+def putMessage():
+    headerdata = {"Host":"10.101.1.36",'Content-Type':'application/json;charset=UTF-8'}
+    #json实体
+    test_data = {'relativeType':'31','relativeID':'5','secondType':1}
+    # json 编码
+    test_data_urlencode = json.JSONEncoder().encode(test_data)
+    conn = http.client.HTTPConnection("10.101.1.36",8080)
+    requrl = '/travel/platformservice/putMessage'
+
+    conn.request(method="POST",url=requrl,body=test_data_urlencode,headers = headerdata)
+
+    response = conn.getresponse()
+    res= response.read()
+    print(res)
+
+# 查询当前消息列表各类型和条数
+def getAllMessageTypeCount():
+    str = urllib.request.urlopen(urllib.parse.quote('http://10.101.1.36:8080/travel/platformservice/getAllMessageTypeCount','?&:/=')).read().decode('utf-8')
+    print(str)
+
 if __name__ == '__main__':
     # sentPrivatePlanToPlanner
     # mcreatePlanSchedular()
     # msentPrivatePlanToPlanner()
-
-    addOrderComplaint();
+    getAllMessageTypeCount()
+    # putMessage()
+    # addOrderComplaint()
     # getPlanDetail()
     # getAgent()
 

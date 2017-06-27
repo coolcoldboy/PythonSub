@@ -215,7 +215,7 @@ def uploade_pic(url):
 
             tupian = {'file': file_array}
 
-            retstr = PostGetHttp.posthttp_onefile(tupian, 'http://123.59.144.44/travel/travellingbag/addtupian')
+            retstr = PostGetHttp.posthttp_onefile(tupian, 'http://10.101.1.165:8096/travel/travellingbag/addtupian')
             jsonobj = json.loads(retstr)
             file_id = jsonobj['datas']
             # ret_upload = client.upload_by_buffer(file_array, pic_name.split('.')[1], {"fileName": pic_name})
