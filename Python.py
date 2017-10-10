@@ -215,7 +215,7 @@ def mgettest():
     pass
 
 def mgettestjson():
-    form = {'hasLanguage': '英语,日语',
+    form = {'hasLanguage': '英语,日语','userName': '加油',
             'hasLanguageForshow':[{'item1':'英语','item2':'fa'},{'item1':'ri','item2':'he'}],
             'picurls':['swooefe/dkd.jpg','swodddae/dcd.jpg']}
     headers = {'Content-Type':'application/json',
@@ -443,11 +443,29 @@ def getAllMessageTypeCount():
     str = urllib.request.urlopen(urllib.parse.quote('http://10.101.1.36:8080/travel/platformservice/getAllMessageTypeCount','?&:/=')).read().decode('utf-8')
     print(str)
 
+def getwxpayinfo():
+    form = {"appid":"wxce4e9a43fa69a9ce","mchId":"1485441592","objType":"0","outTradeNo":"201707181816353320","payerID":"10087","totalFee":"200"}
+    headers = {'Content-Type':'application/json',
+               "Accept": "application/json;charset=UTF-8",
+               'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
+    url = 'http://10.101.1.165:8096/apply/pay/getwxpayinfo'
+    form = json.dumps(form)
+    req = urllib.request.Request(url=url, data=form.encode("utf-8"), headers=headers,method='POST')
+    str = urllib.request.urlopen(req).read().decode('utf-8')
+    # str = PostGetHttp.posthttp(form,'http://localhost:8080/travel/user/gettest')
+    pass
+
+    print(str)
+    return json.loads(str)
+
+
 if __name__ == '__main__':
     # sentPrivatePlanToPlanner
     # mcreatePlanSchedular()
     # msentPrivatePlanToPlanner()
-    getAllMessageTypeCount()
+    getwxpayinfo()
+    # mgettestjson()
+    # getAllMessageTypeCount()
     # putMessage()
     # addOrderComplaint()
     # getPlanDetail()
