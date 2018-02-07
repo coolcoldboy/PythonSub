@@ -37,9 +37,9 @@ def mtest():
                        'C:\\Users\\Public\\Pictures\\Sample Pictures\\Tulips.jpg'],
               'coverFile': 'C:\\Users\\Public\\Pictures\\Sample Pictures\\Tulips.jpg'}
     dictMerged2 = dict(form, **tupian)
-    str = PostGetHttp.posthttp(dictMerged2, 'http://localhost:8080/travel/user/test')
-    print(str)
-    return json.loads(str)
+    strret = PostGetHttp.posthttp(dictMerged2, 'http://localhost:8080/travel/user/test')
+    print(strret)
+    return json.loads(strret)
 
 
 def applyCash():
@@ -55,8 +55,8 @@ def applyCash():
             'payBankName': '招商银行',
             'feeRate': '0.01',
     }
-    str = PostGetHttp.posthttp(form, 'http://localhost:8080/travel/order/applyCash')
-    return json.loads(str)
+    strret = PostGetHttp.posthttp(form, 'http://localhost:8080/travel/order/applyCash')
+    return json.loads(strret)
 
 
 def updateCashStatus():
@@ -70,76 +70,76 @@ def updateCashStatus():
             'feeRate': '0.01',
             'operateUserID': '10055'
     }
-    str = PostGetHttp.posthttp(form, 'http://localhost:8080/travel/order/updateCashStatus')
-    return json.loads(str)
+    strret = PostGetHttp.posthttp(form, 'http://localhost:8080/travel/order/updateCashStatus')
+    return json.loads(strret)
 
 
 def mguideorderlist():
-    str = PostGetHttp.gethttp('localhost', '8080', '/travel/order/guideorderlist?'
+    strret = PostGetHttp.gethttp('localhost', '8080', '/travel/order/guideorderlist?'
                               + 'userName=2721&mobile=0')
-    return json.loads(str)
+    return json.loads(strret)
 
 
 def mgetadjustmoneylist():
-    str = PostGetHttp.gethttp('localhost', '8080', '/travel/order/getadjustmoneylist?'
+    strret = PostGetHttp.gethttp('localhost', '8080', '/travel/order/getadjustmoneylist?'
                               + 'userID=2721&status=0')
-    return json.loads(str)
+    return json.loads(strret)
 
 
 def mgetCashList():
-    str = PostGetHttp.gethttp('localhost', '8080', '/travel/order/getCashList?'
+    strret = PostGetHttp.gethttp('localhost', '8080', '/travel/order/getCashList?'
                               + 'cashID=1&status=1&guiderID=1')
-    return json.loads(str)
+    return json.loads(strret)
 
 
 def mgetBankList():
-    str = PostGetHttp.gethttp('localhost', '8080', '/travel/order/getBankList?'
+    strret = PostGetHttp.gethttp('localhost', '8080', '/travel/order/getBankList?'
     )
-    return json.loads(str)
+    return json.loads(strret)
 
 
 def mgetWalletDetail():
-    str = PostGetHttp.gethttp('localhost', '8080', '/travel/order/getWalletDetail?'
+    strret = PostGetHttp.gethttp('localhost', '8080', '/travel/order/getWalletDetail?'
                               + 'userID=2726&page=1')
-    return json.loads(str)
+    return json.loads(strret)
 
 
 def mgetBankAccountList():
-    str = PostGetHttp.gethttp('localhost', '8080', '/travel/order/getBankAccountList?'
+    strret = PostGetHttp.gethttp('localhost', '8080', '/travel/order/getBankAccountList?'
                               + 'userID=2726')
-    return json.loads(str)
+    return json.loads(strret)
 
 
 def mgetWalletNumBerItem():
-    str = PostGetHttp.gethttp('localhost', '8080', '/travel/order/getWalletNumBerItem?'
+    strret = PostGetHttp.gethttp('localhost', '8080', '/travel/order/getWalletNumBerItem?'
                               + 'userID=2726&serialNumber=201608311954115617')
-    return json.loads(str)
+    return json.loads(strret)
 
 
 def mgetCashDetailByCashNo():
-    str = PostGetHttp.gethttp('10.101.1.165', '8888', '/travel/order/getCashDetailByCashNo?'
+    strret = PostGetHttp.gethttp('10.101.1.165', '8888', '/travel/order/getCashDetailByCashNo?'
                               + 'cashNo=CA201609201739336992')
-    return json.loads(str)
+    return json.loads(strret)
 
 
 def mgetWalletNumBer():
-    str = PostGetHttp.gethttp('10.101.1.165', '8888', '/travel/order/getWalletDetail?'
+    strret = PostGetHttp.gethttp('10.101.1.165', '8888', '/travel/order/getWalletDetail?'
                               + 'userID=10063&page=1')
 
 
 def mgettest():
     # form = {'name': '2721'}
-    # str = PostGetHttp.posthttp(form,'http://localhost:8080/travel/user/gettest')
+    # strret = PostGetHttp.posthttp(form,'http://localhost:8080/travel/user/gettest')
 
-    str = PostGetHttp.gethttp('localhost', '8080', '/travel/user/gettest?'
+    strret = PostGetHttp.gethttp('localhost', '8080', '/travel/user/gettest?'
                               + 'name=汪&page=1')
-    return json.loads(str)
+    return json.loads(strret)
 
 
 def mgetMyCalendar():
-    str = PostGetHttp.gethttp('localhost', '8080', '/travel/user/getMyCalendar?'
+    strret = PostGetHttp.gethttp('localhost', '8080', '/travel/user/getMyCalendar?'
                               + 'guiderID=10023')
-    return json.loads(str)
+    return json.loads(strret)
 
 
 def mcallRefund():
@@ -154,51 +154,51 @@ def mcallRefund():
 
 
     }
-    str = PostGetHttp.posthttp(form, 'http://10.101.1.165:8888/apply/pay/callRefund')
-    return json.loads(str)
+    strret = PostGetHttp.posthttp(form, 'http://10.101.1.165:8888/apply/pay/callRefund')
+    return json.loads(strret)
 
 
 def msetShieldMyCalendar():
     form = {'GuideID': '10063',
     }
-    str = PostGetHttp.posthttp(form, 'http://localhost:8080/travel/user/setShieldMyCalendar')
-    return json.loads(str)
+    strret = PostGetHttp.posthttp(form, 'http://localhost:8080/travel/user/setShieldMyCalendar')
+    return json.loads(strret)
 
 
 def mgetVerifyImf():
-    str = PostGetHttp.gethttp('10.101.1.165', '8888', '/travel/user/getVerifyImf?' +
+    strret = PostGetHttp.gethttp('10.101.1.165', '8888', '/travel/user/getVerifyImf?' +
                               'userID=2726'
     )
-    return json.loads(str)
+    return json.loads(strret)
 
 
 def mgetbooking():
-    str = PostGetHttp.gethttp('www.booking.com', None, "/hotel/jp/the-windsor-toya-resort-spa.zh-cn.html?label=gen173nr-1FCAQoggJCC2NvdW50cnlfMTA2SCtiBW5vcmVmaDGIAQGYATLCAQNhYm7IAQzYAQHoAQH4AQOoAgQ;sid=718527c0a27d241dded2b9240b0355b8;ucfs=1;room1=A,A;dest_type=country;dest_id=106;srfid=b3812e3e0e7d34f30972e7b91c257c0fc6b91a57X13"
+    strret = PostGetHttp.gethttp('www.booking.com', None, "/hotel/jp/the-windsor-toya-resort-spa.zh-cn.html?label=gen173nr-1FCAQoggJCC2NvdW50cnlfMTA2SCtiBW5vcmVmaDGIAQGYATLCAQNhYm7IAQzYAQHoAQH4AQOoAgQ;sid=718527c0a27d241dded2b9240b0355b8;ucfs=1;room1=A,A;dest_type=country;dest_id=106;srfid=b3812e3e0e7d34f30972e7b91c257c0fc6b91a57X13"
     )
-    return json.loads(str)
+    return json.loads(strret)
 
 def mvisitororderdetail():
     # form = {'name': '2721'}
-    # str = PostGetHttp.posthttp(form,'http://localhost:8080/travel/user/gettest')
+    # strret = PostGetHttp.posthttp(form,'http://localhost:8080/travel/user/gettest')
 
-    str = PostGetHttp.gethttp('localhost', '8080', '/travel/order/visitororderdetail?'
+    strret = PostGetHttp.gethttp('localhost', '8080', '/travel/order/visitororderdetail?'
                               + 'orderId=571')
-    return json.loads(str)
+    return json.loads(strret)
 
 def msearchUserByZonAndMob():
     # form = {'name': '2721'}
-    # str = PostGetHttp.posthttp(form,'http://localhost:8080/travel/user/gettest')
+    # strret = PostGetHttp.posthttp(form,'http://localhost:8080/travel/user/gettest')
 
-    str = PostGetHttp.gethttp('localhost', '8080', '/travel/order/searchUserByZonAndMob?'
+    strret = PostGetHttp.gethttp('localhost', '8080', '/travel/order/searchUserByZonAndMob?'
                               + 'zoneCode=0086&mobile=7177')
-    return json.loads(str)
+    return json.loads(strret)
 
 def mupdateOrderTest():
     form = {'orderid': ['10063','10064'],
             'status': ['0','1']
             }
-    str = PostGetHttp.posthttp(form, 'http://localhost:8080/travel/order/updateOrderTest')
-    return json.loads(str)
+    strret = PostGetHttp.posthttp(form, 'http://localhost:8080/travel/order/updateOrderTest')
+    return json.loads(strret)
 
 
 def mgettest():
@@ -210,8 +210,8 @@ def mgettest():
     url = 'http://localhost:8080/travel/user/gettest'
 
     req = urllib.request.Request(url=url, data=urllib.parse.urlencode(form).encode('utf-8'), headers=headers,method='POST')
-    str = urllib.request.urlopen(req).read().decode('utf-8')
-    # str = PostGetHttp.posthttp(form,'http://localhost:8080/travel/user/gettest')
+    strret = urllib.request.urlopen(req).read().decode('utf-8')
+    # strret = PostGetHttp.posthttp(form,'http://localhost:8080/travel/user/gettest')
     pass
 
 def mgettestjson():
@@ -224,47 +224,47 @@ def mgettestjson():
     url = 'http://localhost:8080/travel/user/gettestjson'
     form = json.dumps(form)
     req = urllib.request.Request(url=url, data=form.encode("utf-8"), headers=headers,method='POST')
-    str = urllib.request.urlopen(req).read().decode('utf-8')
-    # str = PostGetHttp.posthttp(form,'http://localhost:8080/travel/user/gettest')
+    strret = urllib.request.urlopen(req).read().decode('utf-8')
+    # strret = PostGetHttp.posthttp(form,'http://localhost:8080/travel/user/gettest')
     pass
 
-    print(str)
-    return json.loads(str)
+    print(strret)
+    return json.loads(strret)
 
 def mexecuteRefund():
-    str = urllib.request.urlopen('http://localhost:8080/travel/aptest/executeRefund').read().decode('utf-8')
+    strret = urllib.request.urlopen('http://localhost:8080/travel/aptest/executeRefund').read().decode('utf-8')
 
 def mgetPlannerName():
-    str = urllib.request.urlopen('http://localhost:8080/travel/user/getPlannerName?mobileNum=13671771921').read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen('http://localhost:8080/travel/user/getPlannerName?mobileNum=13671771921').read().decode('utf-8')
+    print(strret)
 
 def mgettravellingbag():
-    str = urllib.request.urlopen('http://localhost:8080/travel/travellingbag/gettravellingbag?userID=10063').read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen('http://localhost:8080/travel/travellingbag/gettravellingbag?userID=10063').read().decode('utf-8')
+    print(strret)
 
 def mcreatePlanSchedular():
-    str = urllib.request.urlopen('http://localhost:8080/travel/travellingbag/createPlanSchedular?userID=10063').read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen('http://localhost:8080/travel/travellingbag/createPlanSchedular?userID=10063').read().decode('utf-8')
+    print(strret)
 
 def msentPrivatePlanToPlanner():
-    str = urllib.request.urlopen('http://localhost:8080/travel/travellingbag/sentPrivatePlanToPlanner?userID=10063&planID=100370&guidID=10066').read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen('http://localhost:8080/travel/travellingbag/sentPrivatePlanToPlanner?userID=10063&planID=100370&guidID=10066').read().decode('utf-8')
+    print(strret)
 
 def getPlanDetail():
-    str = urllib.request.urlopen('http://10.101.1.165:8888/travel/guideplan/getPlanDetail?userID=10066&planID=100376').read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen('http://10.101.1.165:8888/travel/guideplan/getPlanDetail?userID=10066&planID=100376').read().decode('utf-8')
+    print(strret)
 
 def getServicesCollectByType():
-    str = urllib.request.urlopen('http://10.101.1.165:8888/travel/travellingbag/getServicesCollectByType?userID=10063&serviceTypeID=1&page=1').read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen('http://10.101.1.165:8888/travel/travellingbag/getServicesCollectByType?userID=10063&serviceTypeID=1&page=1').read().decode('utf-8')
+    print(strret)
 
 def setFeedBack():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/setFeedBack?userID=10063&content=我的天空\n\nshenmedongxi\n测试中&trueName=汪先生','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/setFeedBack?userID=10063&content=我的天空\n\nshenmedongxi\n测试中&trueName=汪先生','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def getSpotsCollectCount():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/travellingbag/getSpotsCollectCount?userID=10063','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/travellingbag/getSpotsCollectCount?userID=10063','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def addOrderComplaint():
     form = {'orderID': '2548563',
@@ -284,25 +284,25 @@ def addOrderComplaint():
               }
 
     form = dict(form, **tupian)
-    str = PostGetHttp.posthttp(form, 'http://localhost:8080/travel/order/addOrderComplaint')
+    strret = PostGetHttp.posthttp(form, 'http://localhost:8080/travel/order/addOrderComplaint')
 
-    print(str)
-
-def getOrderComplaint():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/getOrderComplaint?complaintID=1','?&:/=')).read().decode('utf-8')
-    print(str)
+    print(strret)
 
 def getOrderComplaint():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/getOrderComplaintID?orderID=596','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/getOrderComplaint?complaintID=1','?&:/=')).read().decode('utf-8')
+    print(strret)
+
+def getOrderComplaint():
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/getOrderComplaintID?orderID=596','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def getPlannerImfForMainPage():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/getPlannerImfForMainPage?userID=10063&guiderID=10067','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/getPlannerImfForMainPage?userID=10063&guiderID=10067','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def getvisitororderdetail():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/visitororderdetail?orderId=565','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/visitororderdetail?orderId=565','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def getPostCode():
     from openpyxl import Workbook
@@ -353,74 +353,74 @@ def getPostCode():
 
 
 def setAgentStatus():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/setAgentStatus?guideID=10079&agentGuideID=10066&status=2','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/setAgentStatus?guideID=10079&agentGuideID=10066&status=2','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def getPrincipalGuideList():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/getPrincipalGuideList?guideID=10066&page=1','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/getPrincipalGuideList?guideID=10066&page=1','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def getPrincipalGuideList():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/getPrincipalGuideList?guideID=10066&page=1','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/getPrincipalGuideList?guideID=10066&page=1','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def getPrivatePlanDetail():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/travellingbag/getPrivatePlanDetail?planStatus=3&userID=10063&planID=100623','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/travellingbag/getPrivatePlanDetail?planStatus=3&userID=10063&planID=100623','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def orderlistForBKM():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/orderlistForBKM?orderNo=201611','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/orderlistForBKM?orderNo=201611','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def getCashDetail():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/getCashDetail?cashID=49','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/getCashDetail?cashID=49','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def getCashList():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/getCashList?cashID=6','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/getCashList?cashID=6','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def orderDetailForBKM():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/orderDetailForBKM?orderID=719&orderType=1','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/orderDetailForBKM?orderID=719&orderType=1','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def orderlistForBKM():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/orderlistForBKM?orderType=1&orderNo=201611251537','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/orderlistForBKM?orderType=1&orderNo=201611251537','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def getOrderComplaintList():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/getOrderComplaintList','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/getOrderComplaintList','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def getDengniBankAccounts():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/getDengniBankAccounts','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/getDengniBankAccounts','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def getFeedBackList():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/getFeedBackList','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/getFeedBackList','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def getFeedBackDetail():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/getFeedBackDetail?feedbackID=1','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/user/getFeedBackDetail?feedbackID=1','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def saveDeviceTokenToServer():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/auth/saveDeviceTokenToServer?userID=10063&deviceToken=a72bf8b8dc87d8107db961061ba2fcc00735419ae66c3e841d33599f5734ab00','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/auth/saveDeviceTokenToServer?userID=10063&deviceToken=a72bf8b8dc87d8107db961061ba2fcc00735419ae66c3e841d33599f5734ab00','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def guideorderdetail():
-    str = urllib.request.urlopen(urllib.parse.quote('http://10.101.1.165:8888/travel/order/guideorderdetail?orderId=743','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://10.101.1.165:8888/travel/order/guideorderdetail?orderId=743','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 
 
 def getAgent():
-    str = urllib.request.urlopen(urllib.parse.quote('http://10.101.1.165:8888/travel/user/getAgent?guideID=10023','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://10.101.1.165:8888/travel/user/getAgent?guideID=10023','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def changeOrderPrice():
-    str = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/changeOrderPrice?orderID=810&price=1','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/changeOrderPrice?orderID=810&price=1','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 #json传值 post，添加更新件数的通知消息
 def putMessage():
@@ -440,8 +440,8 @@ def putMessage():
 
 # 查询当前消息列表各类型和条数
 def getAllMessageTypeCount():
-    str = urllib.request.urlopen(urllib.parse.quote('http://10.101.1.36:8080/travel/platformservice/getAllMessageTypeCount','?&:/=')).read().decode('utf-8')
-    print(str)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://10.101.1.36:8080/travel/platformservice/getAllMessageTypeCount','?&:/=')).read().decode('utf-8')
+    print(strret)
 
 def getwxpayinfo():
     form = {"appid":"wxce4e9a43fa69a9ce","mchId":"1485441592","objType":"0","outTradeNo":"201707181816353320","payerID":"10087","totalFee":"200"}
@@ -451,19 +451,197 @@ def getwxpayinfo():
     url = 'http://10.101.1.165:8096/apply/pay/getwxpayinfo'
     form = json.dumps(form)
     req = urllib.request.Request(url=url, data=form.encode("utf-8"), headers=headers,method='POST')
-    str = urllib.request.urlopen(req).read().decode('utf-8')
-    # str = PostGetHttp.posthttp(form,'http://localhost:8080/travel/user/gettest')
+    strret = urllib.request.urlopen(req).read().decode('utf-8')
+    # strret = PostGetHttp.posthttp(form,'http://localhost:8080/travel/user/gettest')
     pass
 
-    print(str)
-    return json.loads(str)
+    print(strret)
+    return json.loads(strret)
 
+
+def createGroup():
+    form = {"groupName":"GroupTest","createUserID":"10063","userGroupInfos":[{"userID":2721},{"userID":2726},{"userID":10058},{"userID":10087}]}
+    headers = {'Content-Type':'application/json',
+               "Accept": "application/json;charset=UTF-8",
+               'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
+    url = 'http://localhost:8080/travel/im/createGroup'
+    form = json.dumps(form)
+    req = urllib.request.Request(url=url, data=form.encode("utf-8"), headers=headers,method='POST')
+    strret = urllib.request.urlopen(req).read().decode('utf-8')
+    # strret = PostGetHttp.posthttp(form,'http://localhost:8080/travel/user/gettest')
+    pass
+
+    print(strret)
+    return json.loads(strret)
+
+# 查询当前消息列表各类型和条数
+def getGroupUsers():
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/im/getGroupUsers?groupID=10&userID=10063','?&:/=')).read().decode('utf-8')
+    print(strret)
+
+# /travel/im/groupRefresh
+def groupRefresh():
+    form = {"groupName":"GroupTestRE","groupID":"8","userGroupInfos":[{"userID":10063},{"userID":10058},{"userID":10087}]}
+    headers = {'Content-Type':'application/json',
+               "Accept": "application/json;charset=UTF-8",
+               'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
+    url = 'http://localhost:8080/travel/im/groupRefresh'
+    form = json.dumps(form)
+    req = urllib.request.Request(url=url, data=form.encode("utf-8"), headers=headers,method='POST')
+    strret = urllib.request.urlopen(req).read().decode('utf-8')
+    # strret = PostGetHttp.posthttp(form,'http://localhost:8080/travel/user/gettest')
+    pass
+
+    print(strret)
+    return json.loads(strret)
+
+def deleteGroupUsers():
+    form = {"groupID":"28","userGroupInfos":[{"userID":2721},{"userID":2726}]}
+    headers = {'Content-Type':'application/json',
+               "Accept": "application/json;charset=UTF-8",
+               'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
+    url = 'http://localhost:8080/travel/im/deleteGroupUsers'
+    form = json.dumps(form)
+    req = urllib.request.Request(url=url, data=form.encode("utf-8"), headers=headers,method='POST')
+    strret = urllib.request.urlopen(req).read().decode('utf-8')
+    # strret = PostGetHttp.posthttp(form,'http://localhost:8080/travel/user/gettest')
+    pass
+
+    print(strret)
+    return json.loads(strret)
+
+# gName,groupID,userID
+def groupRefreshSelfGname():
+    strret = urllib.request.urlopen(urllib.parse.quote('http://10.101.1.165:8096/travel/im/groupRefreshSelfGname?groupID=53&userID=2726&gName=哈哈','?&:/=')).read().decode('utf-8')
+    print(strret)
+
+#     groupQuit
+#  {groupID,userID}
+def groupQuit():
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/im/groupQuit?groupID=8&userID=10058','?&:/=')).read().decode('utf-8')
+    print(strret)
+
+#     /getGroupPic
+def getGroupPic():
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/im/getGroupPic?groupID=10','?&:/=')).read().decode('utf-8')
+    print(strret)
+
+#     /setUserNameVisible
+def setUserNameVisible():
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/im/setUserNameVisible?groupID=10&userID=10058&userNameVisibleFlag=1','?&:/=')).read().decode('utf-8')
+    print(strret)
+
+# /getGroupInfoForSelf
+def getGroupInfoForSelf():
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/im/getGroupInfoForSelf?groupID=10&userID=10058','?&:/=')).read().decode('utf-8')
+    print(strret)
+
+# /getGroupInfoForSelf
+def getGroupInfoListForSelf():
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/im/getGroupInfoListForSelf?userID=10058','?&:/=')).read().decode('utf-8')
+    print(strret)
+
+# /getGroupInfoForSelf
+def setFriendMemoName():
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/im/setFriendMemoName?fromUserID=10063&toUserID=10087&memoName=设置者10063','?&:/=')).read().decode('utf-8')
+    print(strret)
+
+    # /getFriendMemoName
+def getFriendMemoName():
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/im/getFriendMemoName?fromUserID=10063&toUserID=10087&memoName=设置者10063','?&:/=')).read().decode('utf-8')
+    print(strret)
+
+def maopao():
+
+    ints = [3,4,6,9,11,3,5,16,2,8]
+    # dict = {'Alice': '2341', 'Beth': '9102', 'Cecil': '3258'}
+    # print(len(dict))
+    # print(dict.__len__())
+    # print(len(ints))
+    # print(ints.__len__())
+    for j, val2 in enumerate(ints) :
+
+        for i,val in enumerate(ints):
+            if i == len(ints)-2-j:
+                break
+            if ints[i] > ints[i+1]:
+                temp = ints[i+1]
+                ints[i+1] = ints[i]
+                ints[i] = temp
+
+
+        print('index %d val %d'%(i,val))
+        pass
+
+    pass
+
+
+def joinGroup():
+    form = {"groupID":"56","createUserID":"10000202","userGroupInfos":[{"userID":2721},{"userID":2726}]}
+    headers = {'Content-Type':'application/json',
+               "Accept": "application/json;charset=UTF-8",
+               'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
+    url = 'http://localhost:8080/travel/im/joinGroup'
+    form = json.dumps(form)
+    req = urllib.request.Request(url=url, data=form.encode("utf-8"), headers=headers,method='POST')
+    strret = urllib.request.urlopen(req).read().decode('utf-8')
+    # strret = PostGetHttp.posthttp(form,'http://localhost:8080/travel/user/gettest')
+    pass
+
+    print(strret)
+    return json.loads(strret)
+
+def short_url():
+    params = {"source":267208165}
+
+    urlLongs = ["http://issue.dengnilvyou.com.cn/registerIndex?inviteCode=99999","http://issue.dengnilvyou.com.cn/registerIndex?inviteCode=15421"]
+    for i,urllong in enumerate(urlLongs):
+
+        key = 'url_long'
+        params[key] = urllong
+        pass
+
+    urllong  =  urllib.parse.urlencode(params)
+    strret = urllib.request.urlopen(urllib.parse.quote('http://api.t.sina.com.cn/short_url/shorten.json?','?&:/=')+urllong).read().decode('utf-8')
+    print(strret)
+
+def applyRefund():
+    form = {"applyUserID":"10000202","orderID":"12584","refundMoney":222.3,"refundReason":"测试ga"}
+    headers = {'Content-Type':'application/json',
+               "Accept": "application/json;charset=UTF-8",
+               'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
+    url = 'http://localhost:8080/travel/order/applyRefund'
+    form = json.dumps(form)
+    req = urllib.request.Request(url=url, data=form.encode("utf-8"), headers=headers,method='POST')
+    strret = urllib.request.urlopen(req).read().decode('utf-8')
+    # strret = PostGetHttp.posthttp(form,'http://localhost:8080/travel/user/gettest')
+    pass
+
+    print(strret)
+    return json.loads(strret)
 
 if __name__ == '__main__':
+
+    # applyRefund()
+    # mgettest()
+    # short_url()
+    # deleteGroupUsers()
+    # joinGroup()
+    # maopao()
+    # getFriendMemoName()
+    # setFriendMemoName()
+    # getGroupInfoListForSelf()
+    # setUserNameVisible()
+    # getGroupPic()
+    # groupQuit()
+    # groupRefreshSelfGname()
+    # groupRefresh()
+    # getGroupUsers()
+    createGroup()
     # sentPrivatePlanToPlanner
     # mcreatePlanSchedular()
     # msentPrivatePlanToPlanner()
-    getwxpayinfo()
+    # getwxpayinfo()
     # mgettestjson()
     # getAllMessageTypeCount()
     # putMessage()

@@ -116,11 +116,11 @@ def gethttp(host, port, url):
         httpClient.request('GET', url, None, {'Content-Type': 'text/html; charset=utf-8'})
         # response是HTTPResponse对象
         response = httpClient.getresponse()
-        print(response.status)
-        print(response.reason)
-        #此处很重要，decode必不可少
+        # print(response.status)
+        # print(response.reason)
+        # #此处很重要，decode必不可少
         strrespose = response.read().decode('utf-8')
-        print(strrespose)
+        # print(strrespose)
         return strrespose
     except Exception as e:
         print(e)
@@ -137,13 +137,13 @@ def posthttp(form, url):
         headers = {"Content-type": contenttype,
                    "Accept": "application/json;charset=UTF-8"}
         req = urllib.request.Request(url=url, data=body, headers=headers)
-        print(req)
+        # print(req)
         res_data = urllib.request.urlopen(req)
         jsonstr = res_data.read().decode('utf-8')
-        print(jsonstr)
-        print(res_data.status)
-        print(res_data.reason)
-        print(res_data.getheaders())  # 获取头信息
+        # print(jsonstr)
+        # print(res_data.status)
+        # print(res_data.reason)
+        # print(res_data.getheaders())  # 获取头信息
         return jsonstr
     except Exception as e:
         print(e)
