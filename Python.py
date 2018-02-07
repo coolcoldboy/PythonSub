@@ -463,6 +463,7 @@ if __name__ == '__main__':
     # sentPrivatePlanToPlanner
     # mcreatePlanSchedular()
     # msentPrivatePlanToPlanner()
+    print("wode")
     getwxpayinfo()
     # mgettestjson()
     # getAllMessageTypeCount()
