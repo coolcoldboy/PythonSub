@@ -11,11 +11,14 @@ import os
 def addSingnalPic(picLocation):
     # C:\\Users\\Public\\Pictures\\Sample Pictures\\Tulips.jpg
     #外网图片上传服务器
-    outhost =  'http://app.dengnilvyou.com.cn';
+    #
+    # outhost =  'http://app.dengnilvyou.com.cn'
+    outhost =  'http://10.101.1.36:8080';
     tupian = {'file': picLocation}
     str = PostGetHttp.posthttp(tupian, outhost+'/travel/travellingbag/addtupian')
-    # print(str)
+    print(str)
     picID = json.loads(str)['datas']
+    print(picID)
     return picID
 
 
@@ -137,4 +140,6 @@ def addOtherPic():
 if __name__ == '__main__':
 
     # addProvincePic()
-    addOtherPic()
+    # addOtherPic()
+
+    addSingnalPic('C:\\Users\\zhwang.kevin\Downloads\\tinified\\cli_500px.png')

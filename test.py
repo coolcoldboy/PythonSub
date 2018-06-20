@@ -7,6 +7,7 @@ import pymysql
 import time
 from fdfs_client.client import *
 
+
 print(sys.getdefaultencoding())
 import PostGetHttp
 import platform

@@ -43,17 +43,18 @@ def mtest():
 
 
 def applyCash():
-    form = {'UserID': '10063',
+    form = {'userID': '10063',
             'withdrawMoney': '200',
             'remark': 'cash',
             'userNameOfAccount': '王',
             'bankName': '招商银行',
             'accountNum': '622501254862588',
             'commission': '8',
-            'payAccountNum': '622825685741',
+            'passwordMD5': 'E10ADC3949BA59ABBE56E057F20F883E',
             'payUserName': '吴',
             'payBankName': '招商银行',
-            'feeRate': '0.01',
+            'feeRate': '0.01','status': '1',
+            'cashType': '2'
     }
     strret = PostGetHttp.posthttp(form, 'http://localhost:8080/travel/order/applyCash')
     return json.loads(strret)
@@ -194,10 +195,10 @@ def msearchUserByZonAndMob():
     return json.loads(strret)
 
 def mupdateOrderTest():
-    form = {'orderid': ['10063','10064'],
-            'status': ['0','1']
+    form = {'orderid': ['2180','10064'],
+            'status': ['7','1']
             }
-    strret = PostGetHttp.posthttp(form, 'http://localhost:8080/travel/order/updateOrderTest')
+    strret = PostGetHttp.posthttp(form, 'http://localhost:8080/travel/order/updateOrder?orderID=2180&status=7')
     return json.loads(strret)
 
 
@@ -620,8 +621,91 @@ def applyRefund():
     print(strret)
     return json.loads(strret)
 
-if __name__ == '__main__':
+    # /getIMRelationApplyListExtra
+def getIMRelationApplyListExtra():
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/userrm/getIMRelationApplyListExtra?userID=10063','?&:/=')).read().decode('utf-8')
+    print(strret)
 
+
+    # * @param  redPacket {money 紅包金額,whoGetType 1 全员 2 指定人  单聊红包无需指定,
+    # *                   redPacketType 类型 1普通，2拼手气，3单聊,number 红包数量,
+    # *                   blessing 红包祝福语,userID 发红包的用户,toID 可以是群 可以是单聊的对方userID
+    # *                   redPacketMemberList 指定人红包时的user:[userID:10063,userID:10053]
+    # *                   }
+def createRedPacket():
+    form = {'money': '10',
+            'whoGetType':'1',
+            'redPacketType':'2',
+            'number':'3',
+            'blessing':'wang',
+            'userID':'10063',
+            'toID':'77'
+        # ,
+        #     'redPacketMemberList':[{'userID':10063},{'userID':2721},{'userID':2726}]
+    }
+    headers = {'Content-Type':'application/json',
+               "Accept": "application/json;charset=UTF-8",
+               'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
+    url = 'http://localhost:8080/travel/order/createRedPacket'
+
+    form = json.dumps(form)
+    req = urllib.request.Request(url=url, data=form.encode("utf-8"), headers=headers,method='POST')
+    strret = urllib.request.urlopen(req).read().decode('utf-8')
+    print(strret)
+    pass
+
+def getRedPacketMoney():
+    # 10053 10063 10000062
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/getRedPacketMoney?userID=10000161&redPacketID=20','?&:/=')).read().decode('utf-8')
+    print(strret)
+
+def addVirtualOrder():
+
+    # @param  {consumeType 消费种类:1，行程打赏，2，加入方案, 3,创建自定义需求, 4,加入方案, 5,门票转让, 6,收付款, 7,红包
+    #                                    *                    serviceID 商品ID（接受转让门票时，是转让门票的 transferOrderID，转账,加入红包时,填创建的红包的ID ）, serviceName 名字,payType 支付方式(4，钱包,1,支付宝，2,银行卡,3,微信)
+    # *                    money 金额, sellerID 卖方ID（转账时，为收款方，创建红包时，不设置）, buyerID 买方ID（转账时，为付款方，创建红包时，为付款方）,passWordMD5:MD5密码}
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/order/addVirtualOrder?consumeType=7&serviceID=8&serviceName=%e7%ba%a2%e5%8c%85&payType=1&money=2721&buyerID=10063','?&:/=')).read().decode('utf-8')
+    print(strret)
+
+def pushConsultMessage():
+    strret = urllib.request.urlopen(urllib.parse.quote('http://localhost:8080/travel/platformservice/pushConsultMessage?fromUserID=1099&toUserID=10063','?&:/=')).read().decode('utf-8')
+    print(strret)
+
+def jsonCommon(url,form):
+    headers = {'Content-Type':'application/json',
+               "Accept": "application/json;charset=UTF-8",
+               'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'}
+    form = json.dumps(form)
+    req = urllib.request.Request(url=url, data=form.encode("utf-8"), headers=headers,method='POST')
+    strret = urllib.request.urlopen(req).read().decode('utf-8')
+    # strret = PostGetHttp.posthttp(form,'http://localhost:8080/travel/user/gettest')
+    pass
+
+    print(strret)
+    return json.loads(strret)
+
+def deleteCardTips():
+    form = {"userID":"10063","touristCardTipIDs":[15868,36987]}
+    url = 'http://localhost:8080/travel/touristCard/deleteCardTips'
+
+    ret = jsonCommon(url,form)
+
+def refundcard():
+    form = {"passwordMD5":"E10ADC3949BA59ABBE56E057F20F883E","userID":"10063","userCardIDs":[15868,36987]}
+    url = 'http://localhost:8080/travel/order/refundcard'
+
+    ret = jsonCommon(url,form)
+
+if __name__ == '__main__':
+    # deleteCardTips()
+    refundcard()
+
+    # pushConsultMessage()
+    # mupdateOrderTest()
+    # getRedPacketMoney()
+    # addVirtualOrder()
+    # createRedPacket()
+    # getIMRelationApplyListExtra();
     # applyRefund()
     # mgettest()
     # short_url()
@@ -637,7 +721,7 @@ if __name__ == '__main__':
     # groupRefreshSelfGname()
     # groupRefresh()
     # getGroupUsers()
-    createGroup()
+    # createGroup()
     # sentPrivatePlanToPlanner
     # mcreatePlanSchedular()
     # msentPrivatePlanToPlanner()
